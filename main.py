@@ -19,7 +19,7 @@ import lxml.html
 import lxml.html.clean
 from openai import OpenAI
 import os
-
+import random
 """#Config"""
 
 # Get the deployment type from environment variables, defaulting to 'dev' if not set
@@ -496,6 +496,7 @@ class LinkedInPoster:
         Returns:
             str: The asset URN of the uploaded image.
         """
+        self.random_number = random.random()
         # Step 1: Download the image from the given URL
         response = requests.get(image_url)
         if response.status_code != 200:
@@ -576,11 +577,11 @@ class LinkedInPoster:
                 {
                     "status": "READY",
                     "description": {
-                        "text": "Image description"
+                        "text": f"Image description {self.random_number}"
                     },
                     "media": image_asset,
                     "title": {
-                        "text": "Image title"
+                        "text": f"Image title {self.random_number}"
                     }
                 }
             ]
