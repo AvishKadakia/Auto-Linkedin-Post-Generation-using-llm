@@ -29,14 +29,12 @@ jobs:
     - name: Run the Script
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
-        LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
-        LINKEDIN_AUTH_TOKEN: ${{ secrets.LINKEDIN_AUTH_TOKEN }}
-        LINKEDIN_REDIRECT_URI: ${{ secrets.LINKEDIN_REDIRECT_URI }}
-        LINKEDIN_VISIBILITY: ${{ secrets.LINKEDIN_VISIBILITY }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_DATABASE: ${{ secrets.DB_DATABASE }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        LINKEDIN_CLIENT_ID_PROD: ${{ secrets.LINKEDIN_CLIENT_ID_PROD }}
+        LINKEDIN_CLIENT_SECRET_PROD: ${{ secrets.LINKEDIN_CLIENT_SECRET_PROD }}
+        LINKEDIN_AUTH_TOKEN_PROD: ${{ secrets.LINKEDIN_AUTH_TOKEN_PROD }}
+        LINKEDIN_CLIENT_ID_DEV: ${{ secrets.LINKEDIN_CLIENT_ID_DEV }}
+        LINKEDIN_CLIENT_SECRET_DEV: ${{ secrets.LINKEDIN_CLIENT_SECRET_DEV }}
+        LINKEDIN_AUTH_TOKEN_DEV: ${{ secrets.LINKEDIN_AUTH_TOKEN_DEV }}
+        DEPLOYMENT_TYPE: ${{secrets.DEPLOYMENT_TYPE}}
       run: |
         python main.py
