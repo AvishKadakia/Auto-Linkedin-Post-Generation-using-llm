@@ -1,0 +1,11 @@
+feedparser
+requests
+beautifulsoup4
+readability-lxml
+openai
+schedule
+spacy
+pytextrank
+scikit-learn
+mysql-connector-python
+textblob
