@@ -622,4 +622,4 @@ for article in filtered_articles:
         article.content = content.replace('**', '').replace('"', '')
         print("------------------------------------------------------------")
         print(article.content)
-        #linkedin_poster.fetch_articles_and_post(article)
+        linkedin_poster.fetch_articles_and_post(article)
