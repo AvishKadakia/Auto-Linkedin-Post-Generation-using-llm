@@ -668,11 +668,18 @@ class LinkedInPoster:
 feed_manager = FeedManager(feeds)
 filtered_feeds = feed_manager.filter_dead_feeds()
 article_fetcher = ArticleFetcher()
+
 # Initialize the PublishedArticlesManager
 published_articles_manager = PublishedArticlesManager()
+
+# Fetch articles
 articles = article_fetcher.fetch_articles(filtered_feeds)
+
+# Filter out already published articles
+unpublished_articles = [article for article in articles if not published_articles_manager.is_published(article)]
+
 article_filter = ArticleFilter(similarity_threshold=SIMILARITY_THRESHOLD)
-filtered_articles = article_filter.filter_articles(articles)
+filtered_articles = article_filter.filter_articles(unpublished_articles)
 content_generator = ContentGenerator()
 linkedin_poster = LinkedInPoster(auth_token)
 for article in filtered_articles:
