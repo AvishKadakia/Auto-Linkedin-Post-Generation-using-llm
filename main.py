@@ -152,8 +152,6 @@ class Article:
             'link': self.link,
             'published': self.published.isoformat(),  # Convert datetime to string
             'first_image_url': self.first_image_url,
-            'useful_links': self.useful_links,
-            'article_text': self.article_text,
             'keywords': self.keywords,
             'hashtags': self.hashtags,
             'similarity_score': self.similarity_score,
@@ -165,12 +163,12 @@ class Article:
     @classmethod
     def from_dict(cls, data):
         article = cls(
-            title=data.get('title', 'Untitled'),  # Provide a default if 'title' is missing
-            link=data.get('link', ''),  # Provide a default if 'link' is missing
+            title=data.get('title', 'Untitled'),
+            link=data.get('link', ''),
             published=datetime.fromisoformat(data['published']),
-            first_image_url=data.get('first_image_url', ''),  # Provide a default if 'first_image_url' is missing
-            useful_links=data.get('useful_links', []),  # Provide a default if 'useful_links' is missing
-            article_text=data.get('article_text', ''),  # Provide a default if 'article_text' is missing
+            first_image_url=data.get('first_image_url', ''),  # This if it's missing
+            useful_links=[],  # Set to an empty list since you're not reading it
+            article_text='',  # Set to an empty string since you're not reading it
         )
         article.keywords = data.get('keywords', [])
         article.hashtags = data.get('hashtags', [])
@@ -179,6 +177,7 @@ class Article:
         article.combined_score = data.get('combined_score', 0.0)
         article.content = data.get('content', "")
         return article
+
 
 
 """#ArticleFetcher"""
