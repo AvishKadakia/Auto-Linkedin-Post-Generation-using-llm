@@ -152,6 +152,8 @@ class Article:
             'link': self.link,
             'published': self.published.isoformat(),  # Convert datetime to string
             'first_image_url': self.first_image_url,
+            'useful_links': self.useful_links,
+            'article_text': self.article_text,
             'keywords': self.keywords,
             'hashtags': self.hashtags,
             'similarity_score': self.similarity_score,
@@ -167,6 +169,7 @@ class Article:
             link=data['link'],
             published=datetime.fromisoformat(data['published']),
             first_image_url=data['first_image_url'],
+            useful_links=data['useful_links'],
             article_text=data['article_text'],
         )
         article.keywords = data.get('keywords', [])
