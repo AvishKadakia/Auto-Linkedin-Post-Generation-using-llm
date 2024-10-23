@@ -450,18 +450,12 @@ Note: Keep any relevant links unedited and list them at the end with some contex
 
         try:
             prompt_templates = []
-            json_file='article_templates.json'
-            if os.path.exists(json_file):
-                with open(json_file, 'r') as f:
-                    try:
-                        prompt_templates = json.load(f)
-                    except json.JSONDecodeError:
-                        prompt_templates = []
-            else:
-                prompt_templates = []
-            print("--------------")
-            print(prompt_templates)
-            prompt = random.choice(prompt_templates)
+            try:
+                with open('article_templates.json', 'r', encoding='utf-8') as file:
+                    prompt_templates = json.load(file)
+            except Exception as e:
+                logger.error(f"Error fetching article_templates.json: {e}")
+            prompt = random.choice(prompt_templates).replace("{summary}", summary)
             response = self.client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
