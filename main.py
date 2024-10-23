@@ -62,7 +62,7 @@ weight_date = 0.7
 weight_similarity = 0.3
 KEYWORD_COUNT = 10
 HASHTAG_COUNT = 7
-no_of_articles_to_publish = 2
+no_of_articles_to_publish = 20
 # Load NLP models globally
 nlp = spacy.load("en_core_web_md")
 nlp.add_pipe("textrank")
