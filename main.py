@@ -167,7 +167,6 @@ class Article:
             link=data['link'],
             published=datetime.fromisoformat(data['published']),
             first_image_url=data['first_image_url'],
-            useful_links=data['useful_links'],
             article_text=data['article_text'],
         )
         article.keywords = data.get('keywords', [])
