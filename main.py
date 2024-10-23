@@ -152,8 +152,6 @@ class Article:
             'link': self.link,
             'published': self.published.isoformat(),  # Convert datetime to string
             'first_image_url': self.first_image_url,
-            'useful_links': self.useful_links,
-            'article_text': self.article_text,
             'keywords': self.keywords,
             'hashtags': self.hashtags,
             'similarity_score': self.similarity_score,
