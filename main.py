@@ -449,36 +449,19 @@ Note: Keep any relevant links unedited and list them at the end with some contex
         hashtags = article.hashtags  # Assuming 'hashtags' is a list of strings
 
         try:
-            prompt = f"""
-You are a tech influencer known for providing in-depth analysis and personal insights on AI and technology trends.
-
-Summary of the article:
-{summary}
-
-Template to Follow:
-
-[Insert click-baity title here] e.g., "OpenAI's Surprising Exit Strategy from Its Microsoft Partnership"
-
-[Insert Brief 2-line Description here] e.g., "The New York Times reports growing tension between OpenAI and Microsoft, straining their five-year partnership. Key issues include financial pressures on OpenAI, Microsoft's limited computing support, and disagreements over their contract terms."
-
-[Insert point-by-point breakdown of the topic]
-
-🔷 Heading: Description
-
-🔷 Heading: Description
-
-[Insert conclusion here] e.g., "As OpenAI advances its AI capabilities, this could be a pivotal point in their partnership and the AI industry’s future."
-
-Instructions:
-- Structure: Follow the template above exactly, replacing placeholders with relevant content based on the article summary.
-- Title: Craft a click-baity title that grabs attention.
-- Description: Write a brief 2-line description summarizing the main points.
-- Breakdown: Provide a point-by-point breakdown using bullet points with emojis, as shown.
-- Conclusion: Write a conclusion that wraps up the post and encourages engagement.
-- Tone: Maintain an authoritative yet approachable tone.
-- Length: The post should be around 200 words.
-- Accuracy: Ensure all information is factually correct.
-"""
+            prompt_templates = []
+            json_file='article_templates.json'
+            if os.path.exists(json_file):
+                with open(json_file, 'r') as f:
+                    try:
+                        prompt_templates = json.load(f)
+                    except json.JSONDecodeError:
+                        prompt_templates = []
+            else:
+                prompt_templates = []
+            print("--------------")
+            print(prompt_templates)
+            prompt = random.choice(prompt_templates)
             response = self.client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
