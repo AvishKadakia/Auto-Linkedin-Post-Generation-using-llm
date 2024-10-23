@@ -146,7 +146,39 @@ class Article:
         self.date_score = 0.0
         self.combined_score = 0.0
         self.content = ""
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'link': self.link,
+            'published': self.published.isoformat(),  # Convert datetime to string
+            'first_image_url': self.first_image_url,
+            'useful_links': self.useful_links,
+            'article_text': self.article_text,
+            'keywords': self.keywords,
+            'hashtags': self.hashtags,
+            'similarity_score': self.similarity_score,
+            'date_score': self.date_score,
+            'combined_score': self.combined_score,
+            'content': self.content,
+        }
 
+    @classmethod
+    def from_dict(cls, data):
+        article = cls(
+            title=data['title'],
+            link=data['link'],
+            published=datetime.fromisoformat(data['published']),
+            first_image_url=data['first_image_url'],
+            useful_links=data['useful_links'],
+            article_text=data['article_text'],
+        )
+        article.keywords = data.get('keywords', [])
+        article.hashtags = data.get('hashtags', [])
+        article.similarity_score = data.get('similarity_score', 0.0)
+        article.date_score = data.get('date_score', 0.0)
+        article.combined_score = data.get('combined_score', 0.0)
+        article.content = data.get('content', "")
+        return article
 """#ArticleFetcher"""
 
 # Initialize the logger
@@ -245,6 +277,30 @@ class ArticleFetcher:
                         img_src = requests.compat.urljoin(base_url, img_src)
                     return img_src
         return ''
+"""#ArticlePublishManager"""
+class PublishedArticlesManager:
+    def __init__(self, json_file='published_articles.json'):
+        self.json_file = json_file
+        self.published_articles = []
+        if os.path.exists(self.json_file):
+            with open(self.json_file, 'r') as f:
+                try:
+                    articles_data = json.load(f)
+                    self.published_articles = [Article.from_dict(data) for data in articles_data]
+                except json.JSONDecodeError:
+                    self.published_articles = []
+        else:
+            self.published_articles = []
+
+    def is_published(self, article):
+        return any(published_article.link == article.link for published_article in self.published_articles)
+
+    def add_published(self, article):
+        self.published_articles.append(article)
+
+    def save(self):
+        with open(self.json_file, 'w') as f:
+            json.dump([article.to_dict() for article in self.published_articles], f, indent=4)
 
 """#ArticleFilter"""
 
@@ -612,14 +668,20 @@ class LinkedInPoster:
 feed_manager = FeedManager(feeds)
 filtered_feeds = feed_manager.filter_dead_feeds()
 article_fetcher = ArticleFetcher()
+# Initialize the PublishedArticlesManager
+published_articles_manager = PublishedArticlesManager()
 articles = article_fetcher.fetch_articles(filtered_feeds)
 article_filter = ArticleFilter(similarity_threshold=SIMILARITY_THRESHOLD)
 filtered_articles = article_filter.filter_articles(articles)
 content_generator = ContentGenerator()
 linkedin_poster = LinkedInPoster(auth_token)
 for article in filtered_articles:
-        content = content_generator.generate_engaging_content(article)
-        article.content = content.replace('**', '').replace('"', '')
-        print("------------------------------------------------------------")
-        print(article.content)
-        linkedin_poster.fetch_articles_and_post(article)
+    content = content_generator.generate_engaging_content(article)
+    article.content = content.replace('**', '').replace('"', '')
+    print("------------------------------------------------------------")
+    print(article.content)
+    linkedin_poster.fetch_articles_and_post(article)
+
+    published_articles_manager.add_published(article)
+    published_articles_manager.save()
+
