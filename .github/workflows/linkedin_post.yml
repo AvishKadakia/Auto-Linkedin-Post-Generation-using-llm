@@ -6,6 +6,9 @@ on:
     - cron: '0 8,20 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,6 +16,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+      with:
+        persist-credentials: true  # Ensure credentials are persisted to push changes
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -35,6 +40,14 @@ jobs:
         LINKEDIN_CLIENT_ID_DEV: ${{ secrets.LINKEDIN_CLIENT_ID_DEV }}
         LINKEDIN_CLIENT_SECRET_DEV: ${{ secrets.LINKEDIN_CLIENT_SECRET_DEV }}
         LINKEDIN_AUTH_TOKEN_DEV: ${{ secrets.LINKEDIN_AUTH_TOKEN_DEV }}
-        DEPLOYMENT_TYPE: ${{secrets.DEPLOYMENT_TYPE}}
+        DEPLOYMENT_TYPE: ${{ secrets.DEPLOYMENT_TYPE }}
       run: |
         python main.py
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add published_articles.json
+        git commit -m 'Update published articles'
+        git push
