@@ -165,12 +165,12 @@ class Article:
     @classmethod
     def from_dict(cls, data):
         article = cls(
-            title=data['title'],
-            link=data['link'],
+            title=data.get('title', 'Untitled'),  # Provide a default if 'title' is missing
+            link=data.get('link', ''),  # Provide a default if 'link' is missing
             published=datetime.fromisoformat(data['published']),
-            first_image_url=data['first_image_url'],
-            useful_links=data.get('useful_links', []),  # Use an empty list if 'useful_links' is missing
-            article_text=data['article_text'],
+            first_image_url=data.get('first_image_url', ''),  # Provide a default if 'first_image_url' is missing
+            useful_links=data.get('useful_links', []),  # Provide a default if 'useful_links' is missing
+            article_text=data.get('article_text', ''),  # Provide a default if 'article_text' is missing
         )
         article.keywords = data.get('keywords', [])
         article.hashtags = data.get('hashtags', [])
@@ -179,6 +179,7 @@ class Article:
         article.combined_score = data.get('combined_score', 0.0)
         article.content = data.get('content', "")
         return article
+
 
 """#ArticleFetcher"""
 
