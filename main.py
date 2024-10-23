@@ -169,7 +169,7 @@ class Article:
             link=data['link'],
             published=datetime.fromisoformat(data['published']),
             first_image_url=data['first_image_url'],
-            useful_links=data['useful_links'],
+            useful_links=data.get('useful_links', []),  # Use an empty list if 'useful_links' is missing
             article_text=data['article_text'],
         )
         article.keywords = data.get('keywords', [])
@@ -179,6 +179,7 @@ class Article:
         article.combined_score = data.get('combined_score', 0.0)
         article.content = data.get('content', "")
         return article
+
 """#ArticleFetcher"""
 
 # Initialize the logger
