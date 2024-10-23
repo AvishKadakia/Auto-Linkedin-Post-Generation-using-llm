@@ -662,7 +662,7 @@ content_generator = ContentGenerator()
 linkedin_poster = LinkedInPoster(auth_token)
 for article in filtered_articles:
     content = content_generator.generate_engaging_content(article)
-    article.content = content.replace('**', '').replace('"', '')
+    article.content = content.replace('**', '').replace('"', '').replace('##', '').replace('###', '').replace('-', '')
     print("------------------------------------------------------------")
     print(article.content)
     linkedin_poster.fetch_articles_and_post(article)
