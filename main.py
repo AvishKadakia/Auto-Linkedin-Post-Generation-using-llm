@@ -58,8 +58,8 @@ logger = logging.getLogger(__name__)
 # Constants
 SIMILARITY_THRESHOLD = 0.03  # Adjust as needed
 # Assign weights (preference to publish date)
-weight_date = 0.3
-weight_similarity = 0.7
+weight_date = 0.7
+weight_similarity = 0.3
 KEYWORD_COUNT = 10
 HASHTAG_COUNT = 7
 no_of_articles_to_publish = 2
