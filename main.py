@@ -86,7 +86,6 @@ feeds = [
     'https://nyheter.aitool.se/feed/',
     'https://www.spritle.com/blog/feed/',
     'https://yatter.in/feed/',
-    'https://www.shaip.com/feed/',
     'https://zerothprinciples.substack.com/feed',
     'https://appzoon.com/feed/',
     'https://rss2.feedspot.com/https://automationagencyindia.com/all-blogs',
