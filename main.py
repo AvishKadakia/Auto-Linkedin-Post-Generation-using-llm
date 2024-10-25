@@ -484,7 +484,7 @@ Your thoughts? 👇
 
 Follow me for more updates on everything AI and Tech
 
-Credit: {credit}
+Source: {credit}
 """
             full_content = f"{content_body}\n{closing_remarks}"
             return full_content
