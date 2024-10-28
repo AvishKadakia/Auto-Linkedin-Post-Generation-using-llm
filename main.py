@@ -78,7 +78,6 @@ feeds = [
     'https://www.unite.ai/feed/',
     'https://ai2people.com/feed/',
     'https://topmarketingai.com/feed/',
-    'https://hanhdbrown.com/feed/',
     'https://aiparabellum.com/feed/',
     'https://www.aihubb.se/rss/2S6wGfhOoJdr/posts',
     'https://dailyai.com/feed/',
